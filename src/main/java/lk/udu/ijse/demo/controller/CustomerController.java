@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import lk.udu.ijse.demo.dto.CustomerDto;
 import lk.udu.ijse.demo.dto.tm.CustomerTM;
 import lk.udu.ijse.demo.model.CustomerModel;
@@ -96,4 +97,16 @@ public class CustomerController implements Initializable {
         }
     }
 
+    public void searchCustomer(MouseEvent mouseEvent) {
+        if (customerTable.getSelectionModel().getSelectedItem() != null) {
+            CustomerTM customerTM = customerTable.getSelectionModel().getSelectedItem();
+            idText.setText(customerTM.getCustID());
+            nameText.setText(customerTM.getCustName());
+            nicText.setText(customerTM.getCustNIC());
+            emailText.setText(customerTM.getCustEmail());
+            contactText.setText(customerTM.getCustPhone());
+        } else {
+            new Alert(Alert.AlertType.WARNING, "Select a Customer First").show();
+        }
+    }
 }

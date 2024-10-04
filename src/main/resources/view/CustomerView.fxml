@@ -86,7 +86,7 @@
             <Font name="Segoe UI Bold" size="11.0" />
          </font>
       </Button>
-      <TableView fx:id="customerTable" layoutX="11.0" layoutY="363.0" prefHeight="227.0" prefWidth="642.0">
+      <TableView fx:id="customerTable" layoutX="11.0" layoutY="363.0" onMouseClicked="#searchCustomer" prefHeight="227.0" prefWidth="642.0">
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="72.0" text="ID" />
           <TableColumn fx:id="nameColumn" prefWidth="170.4000244140625" text="Name" />
