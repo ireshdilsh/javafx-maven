@@ -40,6 +40,7 @@ public class CustomerController implements Initializable {
         String resp = customerModel.saveCustomer(customerDto);
         new Alert(Alert.AlertType.INFORMATION, resp).show();
         clearTextFields();
+        getNextCustomerID();
         getAllCustomers();
     }
 
@@ -74,7 +75,12 @@ public class CustomerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        getAllCustomers();
+        try {
+            getAllCustomers();
+            getNextCustomerID();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void getAllCustomers(){
@@ -108,5 +114,10 @@ public class CustomerController implements Initializable {
         } else {
             new Alert(Alert.AlertType.WARNING, "Select a Customer First").show();
         }
+    }
+
+    public void getNextCustomerID() throws SQLException {
+        String lastCustomerID = customerModel.getNextCustomerID();
+        idText.setText(lastCustomerID);
     }
 }

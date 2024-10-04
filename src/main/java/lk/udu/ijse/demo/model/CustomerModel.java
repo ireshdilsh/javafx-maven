@@ -82,4 +82,19 @@ public class CustomerModel {
         return FXCollections.observableArrayList(customerList);
     }
 
+    public String getNextCustomerID() throws SQLException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        String query = "SELECT customer_id FROM customer ORDER BY customer_id DESC LIMIT 1";
+        PreparedStatement pstm = connection.prepareStatement(query);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            String lastID = resultSet.getString(1);
+            String subString = lastID.substring(1);
+            int tempID = Integer.parseInt(subString);
+            tempID++;
+            return String.format("C%03d", tempID);
+        }
+        return null;
+    }
+
 }
