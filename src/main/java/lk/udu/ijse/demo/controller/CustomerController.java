@@ -57,11 +57,12 @@ public class CustomerController implements Initializable {
         getAllCustomers();
     }
 
-    public void deleteCustomer(ActionEvent actionEvent) {
+    public void deleteCustomer(ActionEvent actionEvent) throws SQLException {
         String deleteID = idText.getText();
         String resp = customerModel.deleteCustomer(deleteID);
         new Alert(Alert.AlertType.INFORMATION, resp).show();
         clearTextFields();
+        getNextCustomerID();
         getAllCustomers();
     }
 

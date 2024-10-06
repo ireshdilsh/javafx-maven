@@ -19,11 +19,11 @@ public class CustomerModel {
         String query = "INSERT INTO customer VALUES (?,?,?,?,?)";
         PreparedStatement pstm = connection.prepareStatement(query);
         try {
-            pstm.setObject(1, customerDto.getCustID());
-            pstm.setObject(2, customerDto.getCustName());
-            pstm.setObject(3, customerDto.getCustNIC());
-            pstm.setObject(4, customerDto.getCustEmail());
-            pstm.setObject(5, customerDto.getCustPhone());
+            pstm.setString(1, customerDto.getCustID());
+            pstm.setString(2, customerDto.getCustName());
+            pstm.setString(3, customerDto.getCustNIC());
+            pstm.setString(4, customerDto.getCustEmail());
+            pstm.setString(5, customerDto.getCustPhone());
             return pstm.executeUpdate() > 0 ? "Saved" : "Not Saved";
         } catch (Exception e) {
             e.printStackTrace();

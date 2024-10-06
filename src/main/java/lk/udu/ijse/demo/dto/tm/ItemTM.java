@@ -1,4 +1,4 @@
-package lk.udu.ijse.demo.dto;
+package lk.udu.ijse.demo.dto.tm;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ItemDto {
+public class ItemTM {
     private String itemID;
     private String name;
     private Integer qty;

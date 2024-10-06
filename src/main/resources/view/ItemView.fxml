@@ -1,15 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="598.0" prefWidth="664.0" style="-fx-background-color: #f9fafb; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.udu.ijse.demo.controller.ItemController">
    <children>
-      <Label layoutX="228.0" layoutY="155.0" text="ItemView">
+      <Label layoutX="229.0" layoutY="14.0" text="ItemView">
          <font>
             <Font name="Segoe UI Bold" size="46.0" />
          </font>
       </Label>
+      <Label layoutX="52.0" layoutY="92.0" text="Item ID">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="idLabel" layoutX="121.0" layoutY="92.0" text="Item ID">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="52.0" layoutY="139.0" text="Price">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="352.0" layoutY="92.0" text="Name">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="358.0" layoutY="139.0" text="QTY">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="priceText" layoutX="121.0" layoutY="129.0" prefHeight="38.0" prefWidth="216.0" style="-fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; -fx-border-radius: 7; -fx-background-radius: 7;" />
+      <TextField fx:id="nameText" layoutX="422.0" layoutY="82.0" prefHeight="38.0" prefWidth="216.0" style="-fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; -fx-border-radius: 7; -fx-background-radius: 7;" />
+      <TextField fx:id="qtyText" layoutX="422.0" layoutY="129.0" prefHeight="38.0" prefWidth="216.0" style="-fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; -fx-border-radius: 7; -fx-background-radius: 7;" />
+      <Button layoutX="77.0" layoutY="197.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="125.0" style="-fx-background-color: #e5e7eb;" text="Generate Report">
+         <font>
+            <Font name="Segoe UI Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="saveButton" layoutX="220.0" layoutY="197.0" mnemonicParsing="false" onAction="#savItem" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #e5e7eb;" text="Save">
+         <font>
+            <Font name="Segoe UI Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="resetButton" layoutX="512.0" layoutY="197.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #e5e7eb;" text="Reset">
+         <font>
+            <Font name="Segoe UI Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="deleteItemButton" layoutX="309.0" layoutY="197.0" mnemonicParsing="false" onAction="#deleteItem" prefHeight="38.0" prefWidth="87.0" style="-fx-background-color: #e5e7eb;" text="Delete">
+         <font>
+            <Font name="Segoe UI Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="updateButton" layoutX="410.0" layoutY="197.0" mnemonicParsing="false" onAction="#updateItem" prefHeight="38.0" prefWidth="87.0" style="-fx-background-color: #e5e7eb;" text="Update">
+         <font>
+            <Font name="Segoe UI Bold" size="13.0" />
+         </font>
+      </Button>
+      <TableView fx:id="itemTable" layoutX="15.0" layoutY="299.0" onMouseClicked="#searchItem" prefHeight="278.0" prefWidth="632.0">
+        <columns>
+          <TableColumn fx:id="idColumn" prefWidth="86.39996337890625" text="ItemID" />
+          <TableColumn fx:id="nameColumn" prefWidth="251.199951171875" text="Name" />
+            <TableColumn fx:id="priceColumn" prefWidth="175.199951171875" text="Unit Price" />
+            <TableColumn fx:id="qtyColumn" prefWidth="118.4000244140625" text="QTY" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
