@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -11,8 +12,9 @@ import java.io.IOException;
 public class Appinitializer extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/LogInView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
         stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icon.png")));
         stage.show();
     }
 
