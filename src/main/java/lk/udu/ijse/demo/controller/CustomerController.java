@@ -55,6 +55,7 @@ public class CustomerController implements Initializable {
         new Alert(Alert.AlertType.INFORMATION, resp).show();
         clearTextFields();
         getAllCustomers();
+        getNextCustomerID();
     }
 
     public void deleteCustomer(ActionEvent actionEvent) throws SQLException {

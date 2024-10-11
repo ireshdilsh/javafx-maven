@@ -5,10 +5,10 @@ import lk.udu.ijse.demo.db.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class CrudUtils {
-    public static <T>T executeCrud(String querry,Object...obj){
-        try {
+    public static <T>T executeCrud(String querry,Object...obj) throws SQLException {
 
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(querry);
@@ -25,9 +25,5 @@ public class CrudUtils {
                 boolean isSave = i > 0;
                 return (T)((Boolean)isSave);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

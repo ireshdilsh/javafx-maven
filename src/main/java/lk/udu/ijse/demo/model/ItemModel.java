@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import lk.udu.ijse.demo.db.DBConnection;
 import lk.udu.ijse.demo.dto.ItemDto;
 import lk.udu.ijse.demo.dto.tm.ItemTM;
+import lk.udu.ijse.demo.util.CrudUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,10 +16,8 @@ import java.util.ArrayList;
 public class ItemModel {
     public String getNextItemID() throws SQLException {
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
             String query = "SELECT item_id FROM item ORDER BY item_id DESC LIMIT 1";
-            PreparedStatement pstm = connection.prepareStatement(query);
-            ResultSet resultSet = pstm.executeQuery();
+            ResultSet resultSet = CrudUtils.executeCrud(query);
             if (resultSet.next()) {
                 String lastID = resultSet.getString(1);
                 String subString = lastID.substring(1);
@@ -35,58 +34,27 @@ public class ItemModel {
     }
 
     public String saveItem(ItemDto itemDto) throws SQLException {
-        try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            String querry = "insert into item values(?,?,?,?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(querry);
-
-            preparedStatement.setString(1,itemDto.getItemID());
-            preparedStatement.setString(2,itemDto.getName());
-            preparedStatement.setInt(3,itemDto.getQty());
-            preparedStatement.setDouble(4,itemDto.getPrice());
-
-            return preparedStatement.executeUpdate() > 0 ? "Item Added Success!" : "Something Fail";
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        String querry = "insert into item values(?,?,?,?)";
+        Boolean b  = CrudUtils.executeCrud(querry,itemDto.getItemID(),itemDto.getName(),itemDto.getQty(),itemDto.getPrice());
+        return b == Boolean.TRUE ? "Success" : "Fail";
     }
 
     public String updateItem(ItemDto itemDto) throws SQLException {
-        try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            String querry = "update item set name = ?,quantity = ?,price = ? where item_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(querry);
-
-            preparedStatement.setString(1,itemDto.getName());
-            preparedStatement.setInt(2,itemDto.getQty());
-            preparedStatement.setDouble(3,itemDto.getPrice());
-            preparedStatement.setString(4,itemDto.getItemID());
-
-            return preparedStatement.executeUpdate() > 0 ? "Item Updated Success!" : "Something Fail";
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+         String querry = "update item set name = ?,quantity = ?,price = ? where item_id = ?";
+         Boolean b = CrudUtils.executeCrud(querry,itemDto.getName(),itemDto.getQty(),itemDto.getPrice(),itemDto.getItemID());
+         return b == Boolean.TRUE ? "Success" : "Fail";
     }
 
     public String deleteItem(String itemID) throws SQLException {
-        try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            String querry = "delete from item where item_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(querry);
-            preparedStatement.setString(1,itemID);
-
-            return preparedStatement.executeUpdate() > 0 ? "Delete Success!" : "Something Went Wrong";
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        String querry = "delete from item where item_id = ?";
+        Boolean b = CrudUtils.executeCrud(querry,itemID);
+        return b == Boolean.TRUE ? "Success" : "Fail";
     }
 
     public ObservableList<ItemTM> getAllItems() throws SQLException {
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
             String querry = "select * from item";
-            PreparedStatement preparedStatement = connection.prepareStatement(querry);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = CrudUtils.executeCrud(querry);
 
             ArrayList<ItemTM>itemTMS = new ArrayList<>();
 
