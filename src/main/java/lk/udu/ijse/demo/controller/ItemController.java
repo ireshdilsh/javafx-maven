@@ -27,6 +27,9 @@ public class ItemController implements Initializable {
     public TableColumn <ItemTM,String> nameColumn;
     public TableColumn <ItemTM,Double> priceColumn;
     public TableColumn <ItemTM,Integer> qtyColumn;
+    public Button saveButton;
+    public Button deleteItemButton;
+    public Button updateButton;
 
     public void clearTextFields(){
         nameText.setText("");
@@ -74,12 +77,14 @@ public class ItemController implements Initializable {
 
     public void deleteItem(ActionEvent actionEvent) throws SQLException {
         try {
-            String itemID = idLabel.getText();
-            String resp = itemModel.deleteItem(itemID);
-            new Alert(Alert.AlertType.INFORMATION,resp).show();
-            clearTextFields();
-            getAllItems();
-            getNextItemID();
+            if (new Alert(Alert.AlertType.CONFIRMATION,"Do you want to Delete this Item ? ").showAndWait().get() == ButtonType.OK) {
+                String itemID = idLabel.getText();
+                String resp = itemModel.deleteItem(itemID);
+                new Alert(Alert.AlertType.INFORMATION,resp).show();
+                clearTextFields();
+                getAllItems();
+                getNextItemID();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -87,16 +92,18 @@ public class ItemController implements Initializable {
 
     public void updateItem(ActionEvent actionEvent) throws SQLException {
         try {
-            ItemDto itemDto = new ItemDto(
-                    idLabel.getText(),
-                    nameText.getText(),
-                    Integer.parseInt(qtyText.getText()),
-                    Double.parseDouble(priceText.getText()));
+            if (new Alert(Alert.AlertType.CONFIRMATION,"Do you want to update this Item ?").showAndWait().get() == ButtonType.OK) {
+                ItemDto itemDto = new ItemDto(
+                        idLabel.getText(),
+                        nameText.getText(),
+                        Integer.parseInt(qtyText.getText()),
+                        Double.parseDouble(priceText.getText()));
 
-            String resp = itemModel.updateItem(itemDto);
-            new Alert(Alert.AlertType.INFORMATION,resp).show();
-            getAllItems();
-            clearTextFields();
+                String resp = itemModel.updateItem(itemDto);
+                new Alert(Alert.AlertType.INFORMATION,resp).show();
+                getAllItems();
+                clearTextFields();
+            }
         } catch (NumberFormatException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
@@ -105,6 +112,9 @@ public class ItemController implements Initializable {
     }
 
     public void searchItem(MouseEvent mouseEvent) {
+        saveButton.setDisable(true);
+        deleteItemButton.setDisable(false);
+        updateButton.setDisable(false);
         if (itemTable.getSelectionModel().getSelectedItem() != null) {
             ItemTM itemTM = itemTable.getSelectionModel().getSelectedItem();
             idLabel.setText(itemTM.getItemID());
@@ -119,6 +129,8 @@ public class ItemController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            deleteItemButton.setDisable(true);
+            updateButton.setDisable(true);
             getAllItems();
             getNextItemID();
         } catch (SQLException e) {

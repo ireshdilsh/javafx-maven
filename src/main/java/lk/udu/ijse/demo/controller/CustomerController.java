@@ -29,6 +29,9 @@ public class CustomerController implements Initializable {
     public TableColumn <CustomerTM,String> nicColumn;
     public TableColumn <CustomerTM,String> emailColumn;
     public TableColumn <CustomerTM,String> contactColumn;
+    public Button saveButton;
+    public Button updateButton;
+    public Button deleteButton;
 
     public void addNewCustomer(ActionEvent actionEvent) throws SQLException {
         CustomerDto customerDto = new CustomerDto(
@@ -45,26 +48,33 @@ public class CustomerController implements Initializable {
     }
 
     public void updateCustomer(ActionEvent actionEvent) throws SQLException {
-        CustomerDto customerDto = new CustomerDto(
-                idText.getText(),
-                nameText.getText(),
-                nicText.getText(),
-                emailText.getText(),
-                contactText.getText());
-        String resp = customerModel.updateCustomer(customerDto);
-        new Alert(Alert.AlertType.INFORMATION, resp).show();
-        clearTextFields();
-        getAllCustomers();
-        getNextCustomerID();
+
+        if (new Alert(Alert.AlertType.CONFIRMATION,"Do you want to update this Customer ?").showAndWait().get() == ButtonType.OK) {
+            saveButton.setDisable(true);
+            CustomerDto customerDto = new CustomerDto(
+                    idText.getText(),
+                    nameText.getText(),
+                    nicText.getText(),
+                    emailText.getText(),
+                    contactText.getText());
+            String resp = customerModel.updateCustomer(customerDto);
+            new Alert(Alert.AlertType.INFORMATION, resp).show();
+            clearTextFields();
+            getAllCustomers();
+            getNextCustomerID();
+        }
     }
 
     public void deleteCustomer(ActionEvent actionEvent) throws SQLException {
-        String deleteID = idText.getText();
-        String resp = customerModel.deleteCustomer(deleteID);
-        new Alert(Alert.AlertType.INFORMATION, resp).show();
-        clearTextFields();
-        getNextCustomerID();
-        getAllCustomers();
+        if (new Alert(Alert.AlertType.CONFIRMATION,"Do you want to Delete this Customer ? ").showAndWait().get() == ButtonType.OK){
+            saveButton.setDisable(true);
+            String deleteID = idText.getText();
+            String resp = customerModel.deleteCustomer(deleteID);
+            new Alert(Alert.AlertType.INFORMATION, resp).show();
+            clearTextFields();
+            getNextCustomerID();
+            getAllCustomers();
+        }
     }
 
     void clearTextFields() {
@@ -78,6 +88,8 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            updateButton.setDisable(true);
+            deleteButton.setDisable(true);
             getAllCustomers();
             getNextCustomerID();
         } catch (SQLException e) {
@@ -106,6 +118,9 @@ public class CustomerController implements Initializable {
     }
 
     public void searchCustomer(MouseEvent mouseEvent) {
+        saveButton.setDisable(true);
+        deleteButton.setDisable(false);
+        updateButton.setDisable(false);
         if (customerTable.getSelectionModel().getSelectedItem() != null) {
             CustomerTM customerTM = customerTable.getSelectionModel().getSelectedItem();
             idText.setText(customerTM.getCustID());
